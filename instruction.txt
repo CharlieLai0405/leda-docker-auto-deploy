@@ -1,0 +1,8 @@
+Linux / MacOS / WSL
+cd .sh檔路徑
+cd /Users/laicharlie/Desktop/Charlie/Leda/earth-api/
+chmod +x run.sh
+./run.sh
+
+Windows
+run.bat           # 如果你是 Windows

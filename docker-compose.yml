@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  cuda:
+    build:
+      context: .
+      dockerfile: docker/cuda.Dockerfile
+    image: leda-api:cuda
+    tty: true
+    command: python app.py
+    working_dir: /LEDA
+    volumes:
+      - .:/LEDA
+    ports:
+      - "${APP_PORT}:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: ["gpu"]
+    environment:
+      - APP_PORT=${APP_PORT}
+      - DEBUG=${DEBUG}
+      - API_KEY=${API_KEY}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+
+  cpu:
+    build:
+      context: .
+      dockerfile: docker/cpu.Dockerfile
+    image: leda-api:cpu
+    tty: true
+    command: python app.py
+    working_dir: /LEDA
+    volumes:
+      - .:/LEDA
+    ports:
+      - "${APP_PORT}:8000"
+    environment:
+      - APP_PORT=${APP_PORT}
+      - DEBUG=${DEBUG}
+      - API_KEY=${API_KEY}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
